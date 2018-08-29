@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 public class BasicBillCalculator implements BillCalculator {
 
+    
+  
 	@Override
 	public int calculateBill(Order o,Map<String,RestaurantProduct> productsMap) {
 		int total=0;

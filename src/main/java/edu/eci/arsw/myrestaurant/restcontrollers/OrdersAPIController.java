@@ -16,15 +16,21 @@
  */
 package edu.eci.arsw.myrestaurant.restcontrollers;
 
+import edu.eci.arsw.myrestaurant.context.OrdersRestaurantConfig;
 import edu.eci.arsw.myrestaurant.model.Order;
 import edu.eci.arsw.myrestaurant.model.ProductType;
 import edu.eci.arsw.myrestaurant.model.RestaurantProduct;
+import edu.eci.arsw.myrestaurant.services.RestaurantOrderServices;
 import edu.eci.arsw.myrestaurant.services.RestaurantOrderServicesStub;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.chart.PieChart.Data;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,22 +42,23 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author hcadavid
  */
+    @RestController
+    @RequestMapping(value = "/orders")
 public class OrdersAPIController {
-    
-     @RestController
-    @RequestMapping(value = "edu/eci/arsw/myrestaurant/model/orders")
-    public class XXController {
- 	@RequestMapping(method = RequestMethod.GET)
- 	public ResponseEntity<?> manejadorGetRecursoXX(){
- 		try {
- 			//obtener datos que se enviarán a través del API
- 			return new ResponseEntity<>(data,HttpStatus.ACCEPTED);
- 		} catch (Exception ex) {
- 			Logger.getLogger(XXController.class.getName()).log(Level.SEVERE, null, ex);
- 			return new ResponseEntity<>("Error bla bla bla",HttpStatus.NOT_FOUND);
- 		}  
- 	}      
- }
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> manejadorGetRecursoXX(){
+        try {
+                ApplicationContext cxt = 
+                    new AnnotationConfigApplicationContext(OrdersRestaurantConfig.class);
+                RestaurantOrderServices  re=cxt.getBean(RestaurantOrderServicesStub.class) ;
+             Set<Integer> data = re.getTablesWithOrders();
+                return new ResponseEntity<>(data,HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+                Logger.getLogger(OrdersAPIController.class.getName()).log(Level.SEVERE, null, ex);
+                return new ResponseEntity<>("Error bla bla bla",HttpStatus.NOT_FOUND);
+        }  
+    }      
+     
 
     
 }
