@@ -93,5 +93,20 @@ public class OrdersAPIController {
             return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
         }
     }
+    
+    @RequestMapping(path = "/{numTable}",method = RequestMethod.PUT)    
+    public ResponseEntity<?> manejadorPostRecursoSetPlato(@PathVariable Integer numTable, @RequestBody String food){
+        try {            
+            Map<Integer, Order>  data=mOrdenes.getTableOders();
+            data.get(numTable).addDish(food, 0);
+          
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception ex) {
+            Logger.getLogger(OrdersAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla",HttpStatus.FORBIDDEN);            
+        }        
+
+    }
+
 
 }

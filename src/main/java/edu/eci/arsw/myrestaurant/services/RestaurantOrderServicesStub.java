@@ -79,6 +79,11 @@ public class RestaurantOrderServicesStub implements RestaurantOrderServices {
             return calc.calculateBill(tableOrders.get(tableNumber), productsMap);
         }
     }
+    @Override
+    public Map<Integer, Order> getTableOders(){
+        return tableOrders;
+    }
+    
 
     private static final Map<String, RestaurantProduct> productsMap;
 
