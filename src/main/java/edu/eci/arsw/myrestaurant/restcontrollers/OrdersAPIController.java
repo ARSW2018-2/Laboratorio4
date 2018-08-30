@@ -29,13 +29,17 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.chart.PieChart.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -43,22 +47,37 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hcadavid
  */
     @RestController
-    @RequestMapping(value = "/orders")
+    @RequestMapping(value = "/orders/{numTable}")
 public class OrdersAPIController {
+    @Autowired
+     RestaurantOrderServices mOrdenes;
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> manejadorGetRecursoXX(){
+    
+    public @ResponseBody ResponseEntity<?> manejadorGetRecursoXX(@PathVariable Integer numTable){
         try {
                 ApplicationContext cxt = 
                     new AnnotationConfigApplicationContext(OrdersRestaurantConfig.class);
                 RestaurantOrderServices  re=cxt.getBean(RestaurantOrderServicesStub.class) ;
-             Set<Integer> data = re.getTablesWithOrders();
-                return new ResponseEntity<>(data,HttpStatus.ACCEPTED);
+                //Set<Integer> data = re.getTablesWithOrders();
+                Order data = re.getTableOrder(numTable);
+                if(re.getTableOrder(numTable)==null){
+                    throw new Exception();
+                }else{
+                    return new ResponseEntity<>(data,HttpStatus.ACCEPTED);
+                }
         } catch (Exception ex) {
                 Logger.getLogger(OrdersAPIController.class.getName()).log(Level.SEVERE, null, ex);
                 return new ResponseEntity<>("Error bla bla bla",HttpStatus.NOT_FOUND);
         }  
-    }      
-     
-
-    
+    }
+    @RequestMapping(method = RequestMethod.POST)	
+    public ResponseEntity<?> manejadorPostRecursoOrdenes(@RequestBody Order orden){
+        try {
+            mOrdenes.addNewOrderToTable(orden);
+            return new ResponseEntity<>(HttpStatus.OK);
+            } catch (Exception ex) {
+        Logger.getLogger(OrdersAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error hola",HttpStatus.FORBIDDEN);            
+            }        
+        }
 }

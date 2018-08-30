@@ -23,17 +23,12 @@ public class OrdersRestaurantConfig {
     @Bean
     public RestaurantOrderServices restaurantOrderServices(){
         RestaurantOrderServicesStub  pr=new RestaurantOrderServicesStub();
-        //int y=basicBillCalculator().calculateBill(o, productsMap);
-        //BasicBillCalculator calc=basicBillCalculator (o, productsMap);
-        //pr.setBillCalculator(basicBillCalculator())
         pr.setBillCalculator(basicBillCalculator());
         return pr;
     
     }
-
-    @Bean//Order o,Map<String,RestaurantProduct> productsMap
+    @Bean
     public BillCalculator  basicBillCalculator (){
-        //BillCalculator tt=new BasicBillCalculator();
         return new BasicBillCalculator();
         
         

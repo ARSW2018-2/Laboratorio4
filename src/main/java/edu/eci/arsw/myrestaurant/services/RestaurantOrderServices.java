@@ -8,6 +8,7 @@ package edu.eci.arsw.myrestaurant.services;
 import edu.eci.arsw.myrestaurant.model.Order;
 import edu.eci.arsw.myrestaurant.model.RestaurantProduct;
 import java.util.Set;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
@@ -23,7 +24,7 @@ public interface RestaurantOrderServices {
 
     RestaurantProduct getProductByName(String product) throws OrderServicesException;
 
-    Order getTableOrder(int tableNumber);
+    Order getTableOrder(@PathVariable int tableNumber);
 
     Set<Integer> getTablesWithOrders();
 
