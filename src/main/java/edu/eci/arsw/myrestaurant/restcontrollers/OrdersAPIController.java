@@ -47,11 +47,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hcadavid
  */
     @RestController
-    @RequestMapping(value = "/orders/{numTable}")
+    @RequestMapping(value = "/orders")
 public class OrdersAPIController {
     @Autowired
      RestaurantOrderServices mOrdenes;
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value="/{numTable}",method = RequestMethod.GET)
     
     public @ResponseBody ResponseEntity<?> manejadorGetRecursoXX(@PathVariable Integer numTable){
         try {
@@ -80,4 +80,18 @@ public class OrdersAPIController {
             return new ResponseEntity<>("Error hola",HttpStatus.FORBIDDEN);            
             }        
         }
+    
+
+    @RequestMapping(path = "/{numTable}/total" , method = RequestMethod.GET)
+    public ResponseEntity<?> manejadorGetTotalOrden(@PathVariable Integer numTable){
+        try {
+            //obtener datos que se enviarán a través del API
+                        
+            return new ResponseEntity<>(mOrdenes.calculateTableBill(numTable), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(OrdersAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
