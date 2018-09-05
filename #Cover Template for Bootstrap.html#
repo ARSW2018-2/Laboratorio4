@@ -61,15 +61,6 @@
           <a href="" class="btn btn-lg btn-secondary">New Order</a>
 		          <p class="lead">Make your order with all of you want.</p>
         </p>
-
-		<p>Change the text of the text field, and then click the button below.</p>
-
-		Name: <input type="text" id="myText" value="0">
-
-		<p>Note that the default value is not affected when you change the value of the text field.</p>
-
-		<button type="button" onclick="deleteOrder()">Try it</button>
-
       </main>
 
       <footer class="mastfoot mt-auto">

@@ -145,6 +145,8 @@ var orders =[ {
 	function deleteOrder(){
 		
 		
+		var elm=document.getElementById("myText").outerHTML="";
+		orders.pop(elm);
 
 		
 	}
