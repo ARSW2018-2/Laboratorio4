@@ -22,7 +22,6 @@ var orders =[ {
 	
 	function genera_tabla() {
 	  // Obtener la referencia del elemento body
-	  
 	  var body = document.getElementsByTagName("main")[0];
 
 	  // Crea un elemento <table> y un elemento <tbody>
@@ -138,21 +137,98 @@ var orders =[ {
 	  tabla.setAttribute("border", "2");
 	
 		//genera_tabla();
-		
+		//<a href="javascript:location.reload()">Actualizar página</a>
 	}
 	
 	
 	function deleteOrder(){
 		
 		
-		var elm=document.getElementById("myText").outerHTML="";
+		var elm=document.getElementById("myText");
 		orders.pop(elm);
+		genera_tabla();
 
-		
 	}
 	function myOrder(){
 		
-		document.getElementById("Name").innerHTML=orders[0].products[0].price;
-		
-		
+		document.getElementById("Name").innerHTML=orders[0].products[0].price;	
 	}
+	function loadOrders(){
+		genera_tabla();
+	}
+	function getOrd(){
+
+	const axios = require('axios');
+
+	// Make a request for a user with a given ID
+	axios.get('/user?ID=12345')
+	  .then(function (response) {
+		// handle success
+		console.log(response);
+	  })
+	  .catch(function (error) {
+		// handle error
+		console.log(error);
+	  })
+	  .then(function () {
+		// always executed
+	  });
+
+	// Optionally the request above could also be done as
+	axios.get('/user', {
+		params: {
+		  ID: 12345
+		}
+	  })
+	  .then(function (response) {
+		console.log(response);
+	  })
+	  .catch(function (error) {
+		console.log(error);
+	  })
+	  .then(function () {
+		// always executed
+	  });  
+
+	// Want to use async/await? Add the `async` keyword to your outer function/method.
+	async function getUser() {
+	  try {
+		const response = await axios.get('/user?ID=12345');
+		console.log(response);
+	  } catch (error) {
+		console.error(error);
+	  }
+	}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
